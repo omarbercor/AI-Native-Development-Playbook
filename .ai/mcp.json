@@ -1,0 +1,13 @@
+{
+  "_instructions": "Register each MCP following the standard in .ai/02_mcp_standards.md §6. Remove this _instructions key before first use.",
+  "_template": {
+    "[mcp-identifier]": {
+      "command": "node",
+      "args": ["[absolute-path]/mcp/[mcp-name]/index.js"],
+      "env": {
+        "DOTENV_CONFIG_PATH": "[absolute-path]/mcp/[mcp-name]/.env"
+      }
+    }
+  },
+  "mcpServers": {}
+}
