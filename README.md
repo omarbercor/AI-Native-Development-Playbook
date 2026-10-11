@@ -38,7 +38,8 @@ Este Playbook resuelve estos tres problemas estructurando tu repositorio bajo la
         ├── backend-api-design/         ← APIs REST, contratos OpenAPI, validación en el borde
         ├── visual-qa-testing/          ← Pirámide de pruebas, responsive checks y accesibilidad
         ├── seo-cwv-optimizer/          ← Core Web Vitals (LCP/CLS/INP), Schema.org y metadatos
-        └── devops-infra/               ← Dockerfiles multi-stage, docker-compose y despliegues
+        ├── devops-infra/               ← Dockerfiles multi-stage, docker-compose y despliegues
+        └── cms-plugin-extension/       ← Plugins/temas WordPress/CMS limpios sin tocar el core
 ```
 
 ---

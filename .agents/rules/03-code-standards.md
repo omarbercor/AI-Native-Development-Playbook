@@ -12,6 +12,8 @@
 - **YAGNI (You Aren't Gonna Need It)**: Solo se implementa lo que el requerimiento actual exige. Cero código especulativo o arquitecturas sobredimensionadas para "el futuro".
 - **Fail Fast & Loud**: Validar en el borde. Detectar y lanzar errores estructurados y descriptivos con contexto lo más temprano posible, sin fallos silenciosos.
 - **Single Source of Truth**: Cada constante, token visual, variable de entorno o esquema vive en un único lugar canónico.
+- **Core Inviolable (Open-Closed Principle)**: En CMS (WordPress, Shopify, etc.) o frameworks con dependencias, está estrictamente prohibido modificar archivos del núcleo (`wp-admin/`, `wp-includes/`, carpetas `vendor/`). Toda extensión se realiza mediante APIs oficiales, hooks o módulos aislados.
+- **Arquitectura Modular y Tamaño de Archivos**: Los archivos deben ser atómicos y concisos (máximo 150-200 líneas). Si un archivo supera este límite o contiene múltiples responsabilidades, debe descomponerse en submódulos o utilidades independientes. Las funciones deben ser pequeñas (< 25-30 líneas).
 
 ---
 

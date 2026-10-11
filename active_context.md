@@ -58,6 +58,7 @@ Transformar el repositorio en una plantilla maestra (boilerplate) de gobernanza 
 | `visual-qa-testing` | Skill (On-Demand) | ✅ Lista | Testing unitario, E2E y responsive |
 | `seo-cwv-optimizer` | Skill (On-Demand) | ✅ Lista | Core Web Vitals y Schema.org |
 | `devops-infra` | Skill (On-Demand) | ✅ Lista | Docker, despliegues y multi-entorno |
+| `cms-plugin-extension` | Skill (On-Demand) | ✅ Lista | Extensiones/plugins limpios sin tocar el core |
 
 ---
 
