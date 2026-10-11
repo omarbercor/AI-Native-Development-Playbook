@@ -1,159 +1,126 @@
-# AI-Native Development Playbook
+# AI-Native Development Playbook 🚀
 
-> Un sistema de gobernanza para equipos de desarrollo aumentados por IA. Convierte un agente IA genérico en un equipo de especialistas con memoria persistente, estándares de clase mundial y criterios de calidad profesionales.
-
----
-
-## ¿Qué es esto?
-
-El mundo del desarrollo tiene *Scrum*, *Kanban*, *XP* — metodologías diseñadas para coordinar **personas**. Este playbook hace lo equivalente, pero diseñado para coordinar **agentes IA especializados** con un humano como director técnico.
-
-No es un simple conjunto de prompts. Es un **sistema operativo para desarrollo de software** compuesto por cuatro capas:
-
-| Capa | Qué hace |
-|---|---|
-| **Constitución** | Ley suprema que todo agente obedece antes de actuar. Sin esto, cada sesión de IA empieza desde cero. Con esto, cada sesión tiene el mismo ADN. |
-| **Equipo Virtual** | 7 sub-agentes especializados con dominios, herramientas y criterios de calidad definidos. El Frontend no toca infra. El DevOps no diseña UI. El QA no hace suposiciones. |
-| **Sistema Nervioso** | Memoria persistente que une sesiones. La IA sabe exactamente dónde estaba el proyecto, qué decisiones se tomaron y cuál es el siguiente paso. |
-| **Estándares de Industria** | Conventional Commits, Semantic Versioning, Test Pyramid, API-First, Zero-Trust, Core Web Vitals — codificados como comportamiento obligatorio, no como sugerencias. |
+> **Un sistema operativo de gobernanza y desarrollo para agentes de IA en Google Antigravity.**  
+> Transforma un agente de IA genérico en un equipo de ingeniería de élite con **memoria persistente**, **estándares de seguridad Zero-Trust** y **criterios de calidad visual 10/10**.
 
 ---
 
-## El Equipo (Roles del Sistema)
+## 💡 ¿Por Qué Existe Este Playbook?
 
-| Rol | Dominio |
-|---|---|
-| 🧠 **Orchestrator PM** | Planificación, descomposición de tareas, ruteo, cierre de sprint |
-| ⚙️ **Backend Architect** | APIs REST, autenticación, base de datos, contratos de datos |
-| 🐳 **DevOps SysAdmin** | Infraestructura, Docker, CI/CD, redes, backups, seguridad |
-| 🎨 **Frontend Engineer** | UI/UX premium, animaciones, componentes, rendimiento visual |
-| 🧪 **QA Automation** | Testing, cobertura, mocks, performance, contract testing |
-| 🔍 **SEO Expert** | On-page SEO, Schema.org, Core Web Vitals, visibilidad orgánica |
-| ✍️ **Tech Writer** | Documentación para usuarios, developers externos y equipo interno |
+Al trabajar con asistentes y agentes de IA en proyectos de software surgen tres problemas universales:
 
-> El sistema no está limitado a estos 7 roles. El Orquestador puede proponer y crear nuevos roles cuando un proyecto lo requiera.
+1. **Amnesia entre sesiones:** Cierras el IDE hoy, regresas en un mes o una semana, y la IA no tiene idea de qué se estaba haciendo, qué decisiones se tomaron ni cuál era el siguiente paso.
+2. **Fugas de credenciales y seguridad:** Sin directrices estrictas, los modelos tienden a hardcodear claves API (`sk-...`, `AIza...`), tokens o credenciales directamente en el código o en commits de Git.
+3. **Código genérico o plano:** La IA tiende a entregar soluciones mínimas viables con estilos básicos, componentes desordenados y placeholders del tipo `// TODO: implementar aquí`.
+
+Este Playbook resuelve estos tres problemas estructurando tu repositorio bajo la convención nativa de **Google Antigravity (`.agents/`)**.
 
 ---
 
-## Cómo Funciona
+## 🏛️ Arquitectura del Sistema: Las Tres Capas
 
-```
-[Tú] → Solicitud o requerimiento
-    ↓
-[Orchestrator PM] → Descompone, prioriza y asigna al especialista correcto
-    ↓
-[Sub-Agente Especialista] → Ejecuta con sus reglas locales de excelencia
-    ↓
-[Orchestrator PM] → Verifica Definition of Done
-    ↓
-[Cierre] → Commit semántico + active_context.md actualizado
+```text
+[Tu Proyecto]/
+├── active_context.md          ← 🧠 RAM y Memoria Persistente (Estado vivo del proyecto)
+├── .gitignore                 ← 🛡️ Protección de secrets (.env*)
+│
+└── .agents/
+    ├── rules/                 ← ⚖️ LEYES INVARIANTES (Siempre activas)
+    │   ├── 01-security-zero-trust.md   ← Cero API keys en código, blindaje de .env
+    │   ├── 02-session-lifecycle.md     ← Lectura/Escritura obligatoria de active_context.md
+    │   └── 03-code-standards.md        ← DRY, KISS, Conventional Commits, sin placeholders
+    │
+    └── skills/                ← 🛠️ HABILIDADES BAJO DEMANDA (Progressive Disclosure)
+        ├── web-frontend-craft/         ← UI WOW, glassmorphism, micro-animaciones, 60 FPS
+        ├── secret-auditor/             ← Escaneo regex de credenciales antes de commits
+        ├── project-planner/            ← PRD, 3-Path Analysis, ADRs de arquitectura
+        ├── documentation-writer/       ← User Guide, Developer Guide y Team Reference
+        ├── backend-api-design/         ← APIs REST, contratos OpenAPI, validación en el borde
+        ├── visual-qa-testing/          ← Pirámide de pruebas, responsive checks y accesibilidad
+        ├── seo-cwv-optimizer/          ← Core Web Vitals (LCP/CLS/INP), Schema.org y metadatos
+        └── devops-infra/               ← Dockerfiles multi-stage, docker-compose y despliegues
 ```
 
 ---
 
-## Quickstart — Usar este Playbook en un Proyecto Nuevo
+## ⚖️ 1. Las Reglas Invariantes (`.agents/rules/`)
 
-### 1. Copia la carpeta `.ai/` a tu proyecto
+Las reglas son restricciones que el agente **nunca puede violar**. Están activas de forma permanente en cada interacción:
+
+| Regla | Propósito |
+| :--- | :--- |
+| [`01-security-zero-trust.md`](.agents/rules/01-security-zero-trust.md) | **Tolerancia Cero** a claves API hardcodeadas. Todo secreto va a `.env` (ignorado en Git). Verificación de regex previa. |
+| [`02-session-lifecycle.md`](.agents/rules/02-session-lifecycle.md) | **Memoria Obligatoria**: Al iniciar, lee `active_context.md`. Al cerrar una tarea, actualiza el estado y los próximos pasos. |
+| [`03-code-standards.md`](.agents/rules/03-code-standards.md) | **Calidad 10/10**: Prohibidos bloques de código con `// TODO: implementar`. Conventional Commits y arquitectura limpia. |
+
+---
+
+## 🛠️ 2. Las Habilidades Bajo Demanda (`.agents/skills/`)
+
+Las habilidades no saturan la ventana de contexto (*tokens*). Antigravity solo lee su cabecera y abre el contenido detallado **únicamente cuando la tarea lo requiere**:
+
+- 🎨 **`web-frontend-craft`**: Especialista en crear interfaces que sorprendan. Modo oscuro calibrado, paletas HSL, glassmorphism (`backdrop-filter`), animaciones fluidas con GPU (`transform`, `opacity`) y accesibilidad WCAG AA.
+- 🛡️ **`secret-auditor`**: Escanea cambios activos y archivos modificados con expresiones regulares para atrapar claves de Google Cloud, OpenAI, Anthropic, Stripe, AWS o llaves privadas antes del commit.
+- 📐 **`project-planner`**: Divide problemas complejos en tareas atómicas y evalúa el **Análisis de 3 Caminos** (Prototipo Rápido vs. Arquitectura Escalable vs. Mínimo Mantenimiento).
+- ✍️ **`documentation-writer`**: Redacta documentación especializada para tres audiencias con plantillas listas: usuarios finales, desarrolladores externos y equipo interno.
+- ⚙️ **`backend-api-design`**: Estructura APIs predecibles, esquemas de error unificados y validación de tipos en el borde.
+- 🧪 **`visual-qa-testing`**: Checklist de pruebas en múltiples dispositivos (375px a 1920px), estados límite (listas vacías, textos largos) y determinismo de pruebas.
+- 🔍 **`seo-cwv-optimizer`**: Optimización de Core Web Vitals (< 2.5s LCP, < 0.1 CLS), marcado JSON-LD y etiquetas OpenGraph.
+- 🐳 **`devops-infra`**: Contenedores Docker seguros sin usuario root, configuraciones de reverse proxy y despliegues reproducibles.
+
+---
+
+## 🧠 3. La Memoria Persistente (`active_context.md`)
+
+Este archivo es la **RAM** del proyecto. Permite cerrar el IDE hoy y reanudar el trabajo dentro de 30 días con total claridad:
+
+1. **Al iniciar una sesión:** El agente lee `active_context.md` y sabe al instante cuál es el objetivo actual, qué se terminó y qué sigue.
+2. **Al cerrar una tarea:** El agente actualiza la sección de logros, registra deuda técnica asumida (`[DEBT-XXX]`) y define las próximas acciones inmediatas.
+
+---
+
+## 🚀 Quickstart: Usar este Playbook en un Proyecto Nuevo
+
+### Paso 1: Copiar la carpeta `.agents/` y los archivos base
+Copia `.agents/`, `active_context.md` y `.gitignore` a tu nuevo proyecto:
 
 ```bash
-cp -r .ai/ /tu-nuevo-proyecto/.ai/
-cp .gitignore /tu-nuevo-proyecto/.gitignore
-mkdir /tu-nuevo-proyecto/mcp
+# Desde la raíz de tu nuevo proyecto:
+cp -r /ruta/a/AI-Native-Development-Playbook/.agents ./
+cp /ruta/a/AI-Native-Development-Playbook/active_context.md ./
+cp /ruta/a/AI-Native-Development-Playbook/.gitignore ./
 ```
 
-### 2. Configura tu agente IA
+*(O puedes instalar las reglas y habilidades de forma global en `~/.gemini/config/` para que apliquen a todos tus proyectos en la máquina).*
 
-Apunta tu agente IA al archivo de reglas de tu herramienta:
+### Paso 2: Definir el primer sprint en `active_context.md`
+Abre `active_context.md` y escribe el nombre del proyecto y el objetivo de la primera sesión:
 
-- **Cursor**: crea `.cursor/rules` apuntando a `.ai/00_project_core.md`
-- **GitHub Copilot**: usa `.github/copilot-instructions.md`
-- **Claude / Gemini**: pega el contenido de `00_project_core.md` como system prompt
-
-### 3. Define tu primer sprint
-
-Abre `.ai/active_context.md` y escribe el objetivo de tu primer sprint. La IA lo leerá al inicio de cada sesión.
-
-### 4. Empieza a trabajar
-
-Habla con tu IA como si fuera el Orquestador. Ejemplo:
-
-> *"Necesito construir un sistema de autenticación con login, registro y recuperación de contraseña."*
-
-El Orquestador descompondrá la tarea, la asignará al Backend Architect para el API y al Frontend Engineer para la UI, coordinará el QA para los tests, y cerrará el sprint con un commit semántico y el contexto actualizado.
-
----
-
-## Estándares Incluidos
-
-| Documento | Cubre |
-|---|---|
-| [`00_project_core.md`](.ai/00_project_core.md) | Principios universales, Definition of Done, política Zero-Trust |
-| [`01_planning_and_architecture.md`](.ai/01_planning_and_architecture.md) | PRD, ADRs, 3-path analysis, API-First, observabilidad |
-| [`02_mcp_standards.md`](.ai/02_mcp_standards.md) | MCP tools, whitelist de seguridad, ciclo de vida |
-| [`03_documentation_standards.md`](.ai/03_documentation_standards.md) | Documentación para 3 audiencias con templates listos |
-| [`04_git_standards.md`](.ai/04_git_standards.md) | Branching, PR checklist, Conventional Commits, releases |
-| [`05_environment_standards.md`](.ai/05_environment_standards.md) | Secrets, multi-entorno, rotación de credenciales |
-
----
-
-## Estructura del Sistema
-
-```
-[proyecto]/
-├── .gitignore               ← Protección de secrets desde el primer commit
-├── README.md                ← Este archivo
-├── mcp/                     ← Servidores MCP (uno por carpeta)
-│   └── README.md
-│
-└── .ai/
-    ├── 00_project_core.md
-    ├── 01_planning_and_architecture.md
-    ├── 02_mcp_standards.md
-    ├── 03_documentation_standards.md
-    ├── 04_git_standards.md
-    ├── 05_environment_standards.md
-    ├── active_context.md    ← RAM del sistema (se actualiza cada sprint)
-    ├── mcp.json             ← Registro de MCPs activos
-    ├── docs/
-    │   ├── user_guide.md
-    │   ├── developer_guide.md
-    │   └── team_reference.md
-    └── roles/
-        ├── orchestrator_pm.md
-        ├── backend_architect.md
-        ├── devops_sysadmin.md
-        ├── frontend_engineer.md
-        ├── qa_automation.md
-        ├── seo_expert.md
-        └── tech_writer.md
+```markdown
+## 🎯 Objetivo del Sprint Actual
+Construir una landing page para [Producto] con modo oscuro, formulario interactivo y diseño premium.
 ```
 
----
+### Paso 3: Interactuar con el Agente
+Pide lo que necesitas con naturalidad:
 
-## Por Qué es Distinto a una Metodología Tradicional
+> *"Iniciemos el proyecto. Revisa el active_context y diseña la estructura inicial con diseño WOW y arquitectura modular."*
 
-| Metodología tradicional | AI-Native Development Playbook |
-|---|---|
-| Coordina personas | Coordina agentes IA con un humano como director |
-| El conocimiento vive en las personas | El conocimiento vive en el repositorio |
-| Requiere reuniones para alinear al equipo | El equipo se alinea leyendo el contexto al inicio de cada sesión |
-| Se degrada con la rotación de personas | Es inmune a la rotación — el sistema sabe lo que sabe |
-| Los estándares son aspiracionales | Los estándares son instrucciones que la IA ejecuta literalmente |
-| No escala sin contratar | Escala añadiendo un nuevo archivo de rol |
+El agente automáticamente:
+1. Leerá `active_context.md`.
+2. Activará el skill `project-planner` y `web-frontend-craft`.
+3. Verificará que las credenciales estén en `.env` antes de cualquier commit.
+4. Actualizará la memoria al finalizar.
 
 ---
 
-## Principios Fundamentales
+## 🔒 Manejo Seguro de Entornos
 
-- **DRY** — Si una lógica aparece dos veces, se abstrae.
-- **KISS** — La solución más simple que cumple el requerimiento es la correcta.
-- **YAGNI** — No se implementa funcionalidad especulativa.
-- **Zero-Trust** — Todo input externo es potencialmente hostil. Siempre.
-- **Fail Fast** — Los errores se detectan y reportan lo más temprano posible.
-- **Single Source of Truth** — Cada dato, config o estado tiene exactamente un lugar donde vive.
+- **`.env.example`**: Siempre incluido en el repositorio con las variables requeridas pero sin valores sensibles.
+- **`.env` / `.env.local`**: Protegidos por `.gitignore` y auditados automáticamente por `secret-auditor`.
 
 ---
 
-## Licencia
+## 📄 Licencia
 
-Libre para usar, adaptar y compartir con tu equipo.
+Libre para usar, adaptar y distribuir en tus proyectos personales y comerciales.

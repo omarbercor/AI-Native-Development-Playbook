@@ -12,17 +12,12 @@
 *.pfx
 
 # =============================================================================
-# AI WORKFLOW (.ai/)
-# — The .ai/ folder IS the team playbook and SHOULD be committed.
+# AI AGENT SYSTEM (.agents/)
+# — The .agents/ folder IS the team playbook and SHOULD be committed.
 # — Only ignore machine-specific overrides and local scratchpads.
 # =============================================================================
-.ai/*.local.md
-.ai/scratch/
-
-# =============================================================================
-# MCP SERVERS — Local secrets only
-# =============================================================================
-mcp/**/.env
+.agents/*.local.md
+.agents/scratch/
 
 # =============================================================================
 # NODE.JS
