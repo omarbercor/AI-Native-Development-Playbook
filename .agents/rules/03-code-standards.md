@@ -1,3 +1,8 @@
+---
+trigger: always_on
+description: Estándares invariantes de código limpio, arquitectura modular (< 200 líneas por archivo), cero placeholders y Conventional Commits.
+---
+
 # 03 — Regla Invariante: Estándares de Código y Calidad de Entrega (10/10)
 
 > [!NOTE]

@@ -2,10 +2,8 @@
 # SECRETS & ENVIRONMENT — NEVER COMMIT THESE
 # =============================================================================
 .env
-.env.local
-.env.staging
-.env.production
-.env.*.local
+.env.*
+!.env.example
 *.pem
 *.key
 *.p12
@@ -18,6 +16,7 @@
 # =============================================================================
 .agents/*.local.md
 .agents/scratch/
+# active_context.md  # Opcional: descomenta en proyectos donde NO quieras versionar la memoria RAM en Git
 
 # =============================================================================
 # NODE.JS
@@ -35,6 +34,7 @@ dist/
 build/
 .next/
 .nuxt/
+.astro/
 .output/
 .cache/
 coverage/

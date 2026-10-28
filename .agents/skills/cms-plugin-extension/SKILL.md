@@ -1,88 +1,67 @@
 ---
 name: cms-plugin-extension
 description: >-
-  Clean extension and plugin/theme development specialist for CMS platforms (WordPress, Shopify, etc.).
-  Use this skill when developing plugins, custom modules, or child themes, ensuring zero core modifications,
-  isolated namespaces, official hooks/filters, security nonces, and forward compatibility.
+  Clean extension, custom theme, Gutenberg block, and Headless CMS specialist (WordPress + Astro,
+  Shopify, etc.). Use this skill when developing custom plugins, child/block themes, REST/WPGraphQL
+  endpoints, or headless CMS integrations ensuring zero core modifications, strict security nonces,
+  conditional asset loading, and modular files (< 150 lines).
 ---
 
-# CMS & Plugin Extension — Extensión Limpia sin Modificar el Core
+# CMS & Plugin Extension — WordPress Moderno, Bloques y Headless con Astro (10/10)
 
-Esta habilidad garantiza que cualquier desarrollo sobre un CMS o aplicación base (como WordPress, Drupal o plataformas headless) sea **100% modular, seguro y compatible hacia el futuro (*future-proof*)**, sin tocar jamás archivos del sistema base.
+Esta habilidad garantiza que cualquier desarrollo sobre **WordPress u otro CMS** (ya sea monolítico con tema custom/bloques o **Headless conectado a Astro**) sea **100% modular, rápido, seguro y compatible con futuras actualizaciones**, sin tocar jamás el núcleo.
 
 ---
 
 ## 1. La Ley Inviolable: Cero Modificaciones al Core
 
 > [!CAUTION]
-> **PROHIBICIÓN ABSOLUTA**: Jamás se edita, renombra o añade código a archivos del núcleo de WordPress o del framework (`wp-admin/`, `wp-includes/`, `index.php`, `wp-config.php` base, o carpetas `vendor/`). Cualquier cambio realizado en el core se destruirá en la siguiente actualización del sistema.
-
-### Ubicaciones Permitidas:
-- Plugins propios: `wp-content/plugins/[mi-plugin-custom]/`
-- Temas hijo (Child Themes): `wp-content/themes/[mi-tema-child]/`
-- Must-Use Plugins (solo si aplica arquitectura global): `wp-content/mu-plugins/`
+> **PROHIBICIÓN ABSOLUTA**: Jamás edites ni añadas código en `wp-admin/`, `wp-includes/`, archivos raíz del core ni `vendor/`. Todo vive en `wp-content/plugins/[mi-plugin]/`, `wp-content/themes/[mi-tema]/` o `wp-content/mu-plugins/`.
 
 ---
 
-## 2. Principios de Extensibilidad Limpia
+## 2. Arquitectura Modular (< 150 Líneas por Archivo)
 
-1. **Uso Exclusivo de Hooks Oficiales (*Actions & Filters*)**:
-   - Para añadir funcionalidad o inyectar HTML/JS: `add_action('hook_name', 'callback')`.
-   - Para modificar datos existentes antes de guardarse o renderizarse: `add_filter('hook_name', 'callback')`.
-   - Nunca alterar templates del tema padre directamente; sobrescribirlos en el Child Theme o inyectar mediante hooks.
+Prohibido el clásico `functions.php` o `mi-plugin.php` de 1,500 líneas. Usa el archivo raíz únicamente como **orquestador de carga** y divide cada responsabilidad:
 
-2. **Aislamiento Total de Nombres (Namespaces y Prefijos)**:
-   - Toda función, constante o clase debe usar un prefijo de proyecto o namespace PHP para evitar colisiones con otros plugins:
-     ```php
-     // ✅ Correcto: Con prefijo único o namespace
-     namespace MiProyecto\Billing;
-     const MIPROJECT_VERSION = '1.0.0';
-     function miproject_init() { ... }
+```text
+mi-plugin-o-tema/
+├── functions.php (o mi-plugin.php)  ← Bootstrap limpio y constantes (< 70 líneas)
+├── inc/
+│   ├── PostTypes/                   ← Registro de CPTs y taxonomías (`show_in_rest: true`)
+│   ├── Api/                         ← Endpoints custom `register_rest_route` y webhooks
+│   ├── Blocks/                      ← Registro de bloques nativos (`block.json`) o ACF Blocks
+│   ├── Assets/                      ← Encolado condicional (`wp_enqueue_scripts`)
+│   └── Security/                    ← Nonces, capabilities y sanitización
+├── blocks/
+│   └── hero-experience/             ← `block.json` + `render.php` + script modular aislado
+└── uninstall.php                    ← Limpieza explícita al borrar el plugin
+```
 
-     // ❌ Peligroso: Sin prefijo (colisionará con otros plugins)
-     function init() { ... }
-     ```
-
-3. **Arquitectura Modular del Plugin (< 150 líneas por archivo)**:
-   - Dividir el plugin en responsabilidades claras:
-     ```text
-     mi-plugin/
-     ├── mi-plugin.php          ← Archivo principal de registro y activación (< 80 líneas)
-     ├── includes/
-     │   ├── class-api.php      ← Endpoints REST nativos
-     │   ├── class-admin.php    ← Menús y vistas del panel de administración
-     │   └── class-security.php ← Verificación de nonces y capabilities
-     ├── templates/             ← Vistas HTML limpias
-     └── assets/                ← CSS y JS encolados con wp_enqueue_scripts
-     ```
+- **Namespaces y Prefijos Obligatorios**: Toda clase PHP usa `namespace MiMarca\Modulo;` y toda opción/meta/hook global lleva prefijo único (`mimarca_`).
 
 ---
 
-## 3. Seguridad en Extensiones de CMS (WordPress Standards)
+## 3. Desarrollo Moderno: Bloques Nativos y Puente Astro ↔ WordPress
 
-1. **Verificación de Nonces en Formularios y AJAX**:
-   - Todo formulario o petición REST/AJAX debe validar un nonce para evitar ataques CSRF:
-     ```php
-     check_admin_referer('miproject_action_nonce', 'security');
-     // o para REST:
-     'permission_callback' => function() { return current_user_can('manage_options'); }
-     ```
-
-2. **Capacidades de Usuario (*Capabilities*)**:
-   - Comprobar permisos antes de ejecutar acciones administrativas: `current_user_can('edit_posts')`.
-
-3. **Sanitización y Escape Obligatorio**:
-   - **Al recibir datos**: `sanitize_text_field($_POST['campo'])`, `absint()`, `sanitize_email()`.
-   - **Al renderizar en pantalla**: `esc_html()`, `esc_attr()`, `esc_url()`.
-   - **En base de datos**: Usar `$wpdb->prepare()` para cualquier consulta SQL personalizada. Prohibida la interpolación directa.
+1. **Cero Page-Builders Pesados cuando se busca Rendimiento**:
+   - Prioriza **Bloques Nativos (`block.json` API v3)** o **ACF Blocks** ligeros con plantillas `render.php` limpias que produzcan HTML semántico compatible con nuestros perfiles `awwwards-experience-craft` o `web-frontend-craft`.
+2. **Carga Condicional de Scripts Pesados (GSAP / Three.js)**:
+   - **Nunca** encoles GSAP, Lenis o Three.js en todas las páginas del sitio si solo se usan en bloques o plantillas específicas. Decláralos en `block.json` (`viewScriptModule`) o verifica con `has_block()` / `is_page_template()` antes de encolar.
+3. **WordPress como Headless CMS para Astro**:
+   - Al exponer CPTs o campos personalizados hacia Astro (vía **WP REST API** o **WPGraphQL**), filtra la respuesta para exponer **únicamente los campos públicos necesarios** (nunca expongas emails de autores, IDs internos sensibles ni borradores).
+   - Configura un hook en `save_post` / `transition_post_status` con debounce para disparar el webhook de rebuild o invalidación de caché de Astro en CloudPanel solo cuando el estado cambie a `publish`.
 
 ---
 
-## 4. Compatibilidad Futura (*Future-Proof*)
+## 4. Seguridad Estricta de CMS (Zero-Trust)
 
-1. **Evitar APIs y Funciones Deprecadas**:
-   - Consultar la documentación oficial de la versión activa antes de usar funciones heredadas.
-2. **Encolado Correcto de Assets**:
-   - NUNCA escribir etiquetas `<script>` o `<link>` directo en el HTML. Usar `wp_enqueue_script()` y `wp_enqueue_style()` con dependencias y números de versión para evitar problemas de caché.
-3. **Desactivación y Desinstalación Limpia**:
-   - Incluir `uninstall.php` para eliminar transients, tablas temporales u opciones solo cuando el usuario borre explícitamente el plugin, sin dejar basura en la base de datos.
+1. **Permisos y Nonces en Cada Entrada**:
+   - Formularios/AJAX: `check_admin_referer('mimarca_nonce', 'security')` + `current_user_can('...')`.
+   - Endpoints REST (`register_rest_route`): **Prohibido usar `'permission_callback' => '__return_true'`** en rutas que muten datos o expongan información privada. Define siempre validación de permisos y `args` con `sanitize_callback` y `validate_callback`.
+2. **Entrada Sanitizada, Salida Escapada, SQL Preparado**:
+   - **Input**: `sanitize_text_field()`, `sanitize_email()`, `absint()`, `wp_kses_post()`.
+   - **Output tardío (*Late Escaping*)**: `esc_html()`, `esc_attr()`, `esc_url()`, `wp_json_encode()`.
+   - **Base de datos**: Siempre `$wpdb->prepare("SELECT ... WHERE id = %d", $id)`. Prohibida la interpolación de variables en SQL.
+3. **Rendimiento y Caché**:
+   - Prohibido `query_posts()`. Usa `WP_Query` con `'no_found_rows' => true` cuando no haya paginación y `'fields' => 'ids'` cuando solo necesites identificadores; apóyate en Transients / Redis Object Cache para consultas costosas.

@@ -1,3 +1,8 @@
+---
+trigger: always_on
+description: Política invariante Zero-Trust de protección absoluta de secretos, variables .env y validación en el borde.
+---
+
 # 01 — Regla Invariante: Seguridad Zero-Trust y Protección Absoluta de Secretos
 
 > [!CAUTION]

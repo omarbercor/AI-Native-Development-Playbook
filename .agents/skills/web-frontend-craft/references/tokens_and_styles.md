@@ -1,126 +1,161 @@
-# Referencia de Tokens CSS y Snippets UI Premium
+# Tokens Funcionales (Light/Dark), Superficies Silenciosas y Contenido CMS
 
-Este documento contiene plantillas CSS listas para copiar y usar en proyectos web modernos.
+Plantillas CSS modernas y libres de "AI Slop" para aplicaciones web, tiendas, portales corporativos y sitios gestionados con CMS (WordPress / Astro / Headless).
 
 ---
 
-## 1. Plantilla de Tokens Base (Dark Mode Elegante)
+## 1. Sistema de Tokens Calibrado (`tokens.css` < 110 líneas)
+
+Diseñado con neutros matizados, contraste WCAG AA verificado y soporte limpio para modo claro y oscuro:
 
 ```css
 :root {
-  /* Color Palette - HSL Tailored Dark Theme */
-  --bg-canvas: hsl(222, 47%, 7%);
-  --bg-surface: hsl(222, 47%, 11%);
-  --bg-surface-elevated: hsl(222, 40%, 15%);
-  --bg-surface-glass: hsla(222, 47%, 14%, 0.65);
+  /* Superficies Modo Claro (Limpio, tipo Linear / Stripe) */
+  --bg-canvas: #fafafa;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f4f4f5;
 
-  --border-subtle: hsla(220, 20%, 90%, 0.08);
-  --border-highlight: hsla(220, 20%, 90%, 0.16);
-  --border-accent: hsla(250, 84%, 60%, 0.4);
+  /* Texto con jerarquía real (Nunca gris ilegible) */
+  --text-primary: #111113;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
 
-  --text-primary: hsl(210, 40%, 98%);
-  --text-secondary: hsl(215, 20%, 75%);
-  --text-muted: hsl(215, 16%, 50%);
+  /* Acción Primaria y Semántica (Color reservado a intención) */
+  --brand-solid: #18181b;       /* Reemplazar por color de marca calibrado */
+  --brand-solid-hover: #27272a;
+  --brand-contrast: #ffffff;
+  --focus-ring: #2563eb;
 
-  --accent-primary: hsl(250, 84%, 64%);
-  --accent-primary-hover: hsl(250, 84%, 70%);
-  --accent-glow: hsla(250, 84%, 64%, 0.25);
+  --status-success: #15803d;
+  --status-warning: #b45309;
+  --status-danger: #b91c1c;
 
-  --accent-gradient: linear-gradient(135deg, hsl(250, 84%, 64%), hsl(290, 84%, 60%));
+  /* Bordes por Sombra Perimetral (Se mezclan mejor que border sólido) */
+  --ring-hairline: 0 0 0 1px rgba(17, 17, 19, 0.08);
+  --ring-hover: 0 0 0 1px rgba(17, 17, 19, 0.16);
+  --shadow-card: var(--ring-hairline), 0 1px 2px rgba(17, 17, 19, 0.04);
+  --shadow-overlay: var(--ring-hairline), 0 12px 32px -8px rgba(17, 17, 19, 0.14);
 
-  /* Fluid Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Outfit', var(--font-sans);
+  /* Tipografía Funcional */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
-  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8125rem);
-  --text-sm: clamp(0.875rem, 0.825rem + 0.25vw, 0.9375rem);
-  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
-  --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
-  --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
-  --text-2xl: clamp(1.5rem, 1.35rem + 0.75vw, 2rem);
-  --text-3xl: clamp(2rem, 1.75rem + 1.25vw, 2.75rem);
-  --text-4xl: clamp(2.5rem, 2.1rem + 2vw, 3.75rem);
-
-  /* Spacing Scale */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
-
-  /* Border Radii */
+  /* Escala Modular y Radios Coherentes (Outer radius = Inner + Padding) */
   --radius-sm: 6px;
   --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-full: 9999px;
+  --radius-lg: 14px;
 
-  /* Transitions & Shadows */
-  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-normal: 250ms cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-slow: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  /* Curvas Rápidas de Alta Respuesta (< 240ms) */
+  --ease-snappy: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-press: 120ms;
+  --dur-ui: 180ms;
+}
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.35);
-  --shadow-glow: 0 0 30px var(--accent-glow);
+[data-theme="dark"] {
+  --bg-canvas: #0c0c0e;
+  --bg-surface: #141417;
+  --bg-subtle: #1c1c21;
+
+  --text-primary: #f4f4f6;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+
+  --brand-solid: #f4f4f6;
+  --brand-solid-hover: #e4e4e7;
+  --brand-contrast: #0c0c0e;
+  --focus-ring: #60a5fa;
+
+  --ring-hairline: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --ring-hover: 0 0 0 1px rgba(255, 255, 255, 0.16);
+  --shadow-card: var(--ring-hairline), 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow-overlay: var(--ring-hairline), 0 16px 40px -8px rgba(0, 0, 0, 0.6);
 }
 ```
 
 ---
 
-## 2. Componente de Tarjeta Glassmorphic
+## 2. Superficies, Datos Tabulares y Botones Táctiles
 
 ```css
-.glass-card {
-  background: var(--bg-surface-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  box-shadow: var(--shadow-md);
-  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+/* Panel limpio sin "Card-in-Card" innecesario */
+.surface-panel {
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem;
 }
 
-.glass-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-highlight);
-  box-shadow: var(--shadow-md), var(--shadow-glow);
+/* Obligatorio para precios, métricas, cantidades y tablas */
+.tabular-data {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
-```
 
----
-
-## 3. Botón de Acción Principal (Efecto Micro-Interactivo)
-
-```css
-.btn-primary {
+/* Botón funcional de respuesta inmediata */
+.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.5rem 1rem;
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: 0.875rem;
   font-weight: 600;
-  color: #ffffff;
-  background: var(--accent-gradient);
-  border: 1px solid hsla(0, 0%, 100%, 0.15);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--brand-solid);
+  color: var(--brand-contrast);
   cursor: pointer;
-  box-shadow: var(--shadow-sm), 0 0 15px var(--accent-glow);
-  transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-press) var(--ease-snappy),
+              background-color var(--dur-ui) var(--ease-snappy);
 }
 
-.btn-primary:hover {
-  transform: scale(1.02);
-  filter: brightness(1.1);
-  box-shadow: var(--shadow-md), 0 0 25px var(--accent-glow);
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { background: var(--brand-solid-hover); }
 }
 
-.btn-primary:active {
-  transform: scale(0.98);
+.btn:active { transform: scale(0.97); }
+.btn:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.btn[aria-busy="true"], .btn:disabled { opacity: 0.6; pointer-events: none; }
+```
+
+---
+
+## 3. Contenedor Seguro para Contenido Dinámico CMS (`.cms-prose`)
+
+Ideal para entradas de WordPress (`the_content()`), bloques Gutenberg o Markdown en Astro sin que imágenes o tablas desborden el layout:
+
+```css
+.cms-prose {
+  max-width: 66ch;
+  color: var(--text-primary);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.cms-prose :is(h1, h2, h3, h4) {
+  text-wrap: balance;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+}
+
+.cms-prose img, .cms-prose video, .cms-prose iframe {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin-block: 1.5rem;
+}
+
+.cms-prose table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
 }
 ```
